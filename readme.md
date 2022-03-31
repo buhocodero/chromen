@@ -1,3 +1,1 @@
-para ejecutar el proyecto
-	php artisan serve
-
+# Proyecto punto de venta
