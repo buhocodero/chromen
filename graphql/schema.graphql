@@ -1,0 +1,59 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"Indicates what fields are available at the top level of a query operation."
+type Query {
+    users: [User!]! @guard(with: ["api"]) @paginate(type: "paginator" model: "App\\Models\\User")
+    user(id: ID @eq): User @find(model: "App\\Models\\User")
+    sucursal(id: ID @eq): Sucursal @find(model: "App\\Models\\Sucursal")
+    sucursals: [Sucursal!]! @guard(with: ["api"]) @paginate(type: "paginator" model: "App\\Models\\Sucursal")
+}
+
+"Account of a person who utilizes this application."
+type User {
+"Unique primary key."
+id: ID!
+
+"Non-unique name."
+name: String!
+
+"Unique email address."
+email: String!
+
+"When the email was verified."
+email_verified_at: DateTime
+
+"When the account was created."
+created_at: DateTime!
+
+"When the account was last updated."
+updated_at: DateTime!
+}
+
+type Sucursal{
+	"Unique primary key."
+	id: ID!
+
+	"Non-unique name."
+	name: String!	
+
+	location: String!	
+
+	"When the account was created."
+	created_at: DateTime!
+
+	"When the account was last updated."
+	updated_at: DateTime!
+}
+
+type Mutation {
+login(input: LoginInput @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Login@resolve")
+refreshToken(input: RefreshTokenInput @spread): RefreshTokenPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\RefreshToken@resolve")
+logout: LogoutResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve")
+forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ForgotPassword@resolve")
+updateForgottenPassword(input: NewPasswordWithCodeInput @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ResetPassword@resolve")
+register(input: RegisterInput @spread): RegisterResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Register@resolve")
+socialLogin(input: SocialLoginInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\SocialLogin@resolve")
+verifyEmail(input: VerifyEmailInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\VerifyEmail@resolve")
+updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve") @guard(with: ["api"])
+}
