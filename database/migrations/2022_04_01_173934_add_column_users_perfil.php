@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsuarioPerfilsTable extends Migration
+class AddColumnUsersPerfil extends Migration
 {
   /**
    * Run the migrations.
@@ -13,16 +13,8 @@ class CreateUsuarioPerfilsTable extends Migration
    */
   public function up()
   {
-    Schema::create('usuario_perfils', function (Blueprint $table) {
-      $table->id();
-      $table->unsignedBigInteger('usuario_id');
+    Schema::table('users', function (Blueprint $table) {
       $table->unsignedBigInteger('perfil_id');
-
-      $table
-        ->foreign('usuario_id')
-        ->references('id')
-        ->on('users');
-
       $table
         ->foreign('perfil_id')
         ->references('id')
@@ -37,6 +29,9 @@ class CreateUsuarioPerfilsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('usuario_perfils');
+    Schema::table('users', function (Blueprint $table) {
+      $table->dropForeign(['perfil_id']);
+      $table->dropColumn('perfil_id');
+    });
   }
 }

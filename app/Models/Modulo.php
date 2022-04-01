@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Modulo extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  public $timestamps = false;
+
+  protected $fillable = ['nombre', 'icon', 'short_name'];
 }

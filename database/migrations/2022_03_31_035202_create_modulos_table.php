@@ -17,7 +17,7 @@ class CreateModulosTable extends Migration
       $table->id();
       $table->string('nombre'); // El dato que va aparecer en el sidebar
       $table->string('icon', 20);
-      $table->string('short_name', 20); // El dato de la ruta
+      $table->string('short_name', 40); // El dato de la ruta
     });
   }
 
