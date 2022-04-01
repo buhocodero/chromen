@@ -11,4 +11,9 @@ class Modulo extends Model
   public $timestamps = false;
 
   protected $fillable = ['nombre', 'icon', 'short_name'];
+
+  public function perfiles()
+  {
+    return $this->belongsToMany(Perfil::class, 'perfil_modulos', 'modulo_id', 'perfil_id');
+  }
 }

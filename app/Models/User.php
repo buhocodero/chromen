@@ -38,4 +38,9 @@ class User extends Authenticatable
     protected $casts = [
         'ultimo_login' => 'datetime',
     ];
+
+    public function perfil()
+    {
+      return $this->belongsTo(Perfil::class);    
+    }
 }
