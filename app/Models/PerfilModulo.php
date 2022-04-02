@@ -9,5 +9,6 @@ class PerfilModulo extends Model
 {
   use HasFactory;
   public $timestamps = false;
+
   protected $fillable = ['perfil_id', 'modulo_id', 'add', 'view', 'update', 'delete'];
 }

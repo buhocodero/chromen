@@ -11,6 +11,8 @@ class Perfil extends Model
   public $timestamps = false;
   protected $fillable = ['nombre', 'estado'];
 
+  protected $hidden = ['pivot'];
+
   public function users()
   {
     return $this->hasMany(User::class);
@@ -18,6 +20,8 @@ class Perfil extends Model
 
   public function modulos()
   {
-    return $this->belongsToMany(Modulo::class, 'perfil_modulos', 'perfil_id', 'modulo_id');
+    return $this
+      ->belongsToMany(Modulo::class, 'perfil_modulos', 'perfil_id', 'modulo_id')
+      ->withPivot('add', 'update', 'delete', 'view');
   }
 }

@@ -9,6 +9,7 @@ class Modulo extends Model
 {
   use HasFactory;
   public $timestamps = false;
+  // protected $hidden = ['pivot'];
 
   protected $fillable = ['nombre', 'icon', 'short_name'];
 
