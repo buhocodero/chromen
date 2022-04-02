@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
       $table->id();
       $table->string('nombres', 50);
       $table->string('apellidos', 50);
-      $table->string('usuario')->unique();
+      $table->string('usuario', 50)->unique();
       $table->string('avatar');
       $table->enum('estado', ['A', 'I'])->default('A'); // A - Activo, I - Inactivo
       $table->timestamp('ultimo_login')->default(DB::raw('CURRENT_TIMESTAMP'));

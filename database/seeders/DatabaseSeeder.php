@@ -3,11 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\PerfilSeeder;
-use Database\Seeders\ModuloSeeder;
-use Database\Seeders\PerfilsModulosSeeder;
-use Database\Seeders\UsersSeeder;
-
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +18,9 @@ class DatabaseSeeder extends Seeder
       ModuloSeeder::class,
       PerfilsModulosSeeder::class,
       UsersSeeder::class,
+      CategoriaSeeder::class,
+      ProductoSeeder::class,
+      ClienteSeeder::class,
     ]);
   }
 }
