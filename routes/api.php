@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Controllers
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\PerfilController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,17 @@ Route::group([
   Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout');
     Route::post('/me', 'me');
+  });
+});
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'perfiles'
+], function () {
+  Route::controller(PerfilController::class)->group(function () {
+    Route::get('/', 'all');
+    Route::post('/{id}/add', 'addPerfilModulo');
+    
+    Route::get('/{id}', 'perfil');
   });
 });
