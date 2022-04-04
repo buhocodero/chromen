@@ -34,9 +34,16 @@ Route::group([
   'prefix'      => 'perfiles'
 ], function () {
   Route::controller(PerfilController::class)->group(function () {
+    // Para los perfiles
     Route::get('/', 'all');
-    Route::post('/{id}/add', 'addPerfilModulo');
-    
     Route::get('/{id}', 'perfil');
+    Route::post('/', 'add');
+    Route::put('/{id}', 'update');
+    Route::put('/{id}/status', 'status');
+    Route::delete('/{id}', 'delete');
+
+    // Para los modulos
+    Route::post('/{id}/modulo', 'addModulo');
+    Route::delete('/{id}/modulo/{modulo}', 'deleteModulo');
   });
 });

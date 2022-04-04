@@ -20,14 +20,14 @@ class AuthController extends Controller
     ]);
 
     if ($validator->fails()) {
-      return $this->responeError($validator->errors(), 'Validated errors');
+      return $this->responseError($validator->errors(), 'Validated errors');
     }
 
     $token = auth()->attempt($validator->validated());
     if (!$token) {
-      return $this->responeError([
+      return $this->responseError([
         'error' => 'Credenciales incorrectas'
-      ], '', 401);
+      ], 401);
     }
 
     return $this->createNewToken($token);

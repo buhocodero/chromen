@@ -22,6 +22,6 @@ class Perfil extends Model
   {
     return $this
       ->belongsToMany(Modulo::class, 'perfil_modulos', 'perfil_id', 'modulo_id')
-      ->withPivot('add', 'update', 'delete', 'view');
+      ->withPivot('id', 'add', 'update', 'delete', 'view');
   }
 }
