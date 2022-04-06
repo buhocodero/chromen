@@ -20,7 +20,8 @@ class ClienteFactory extends Factory
       'telefono' => $this->faker->numerify('7#######'),
       'documento' => $this->faker->numerify('0#######-#'),
       'fecha_nacimiento' => $this->faker->date(),
-      'direccion' => $this->faker->address()
+      'direccion' => $this->faker->address(),
+      'NIT' => $this->faker->numerify('####-######-###-#')     
     ];
   }
 }

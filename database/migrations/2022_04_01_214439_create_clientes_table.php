@@ -21,8 +21,9 @@ class CreateClientesTable extends Migration
       $table->string('telefono', 10);
       $table->string('documento', 20);
       $table->enum('tipo_documento', [
-        'DUI', 'NIT', 'LICENCIA', 'OTRO'
+        'DUI', 'LICENCIA', 'OTRO'
       ])->default('DUI');
+      $table->string('NIT', 20)->nullable();
       $table->date('fecha_nacimiento');
       $table->mediumText('direccion');
       $table->unsignedInteger('compras')->default(0);

@@ -12,9 +12,8 @@ class Controller extends BaseController
 {
   use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-  public function tryCatch(
-    $fun,
-    string $message = 'Tenemos un problema con el servidor, intenta mas tarde',
+  public function tryCatch(    $fun,
+    string $message = 'Tenemos un problema con el servidor, intenta mas tarde'
   ) {
     try {
       return $fun();

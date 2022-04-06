@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 // Controllers
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PerfilController;
+use App\Http\Controllers\API\ClienteController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,8 @@ use App\Http\Controllers\API\PerfilController;
 */
 
 Route::post('/auth/login', [AuthController::class, 'login']);
-
+Route::post('/clientes', [ClienteController::class, 'store']);
+Route::get('/clientes', [ClienteController::class, 'index']);
 Route::group([
   'middleware'  => 'jwt.verify',
   'prefix'      => 'auth',
