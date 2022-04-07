@@ -12,7 +12,8 @@ class Controller extends BaseController
 {
   use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-  public function tryCatch(    $fun,
+  public function tryCatch(
+    $fun,
     string $message = 'Tenemos un problema con el servidor, intenta mas tarde'
   ) {
     try {
@@ -52,5 +53,17 @@ class Controller extends BaseController
       'data'      => $data,
       'message'         => $message
     ], $status);
+  }
+
+  public function empresa()
+  {
+    return $this->tryCatch(function () {
+      $payload = auth()->payload();
+      $empresa = $payload->get('empresa');
+      if (!$empresa) {
+        throw new Exception('La empresa no existe!');
+      }
+      return $empresa;
+    });
   }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Empresa;
 use App\Models\Perfil;
 use App\Models\PerfilModulo;
 use Exception;
@@ -15,14 +16,23 @@ class PerfilController extends Controller
   // Para los perfiles
   public function all()
   {
-    $all = Perfil::all();
+    $empresa = $this->empresa();
+    $all = Empresa::find($empresa)->with('perfiles')->get();
     return $this->responseOk($all);
   }
 
   public function perfil($id)
   {
-    $perfil = Perfil::where('id', $id)->with('modulos')->first();
-    return $this->responseOk($perfil);
+    return $this->tryCatch(function ()  use ($id) {
+      $perfil = Perfil::where('id', $id)->with('modulos')->first();
+      if (!$perfil) {
+        throw new Exception('El perfil no existe');
+      }
+      if (strcmp($perfil->empresa_id, $this->empresa()) != 0) {
+        throw new Exception('No tienes acceso al poder al perfil');
+      }
+      return $this->responseOk($perfil);
+    });
   }
 
   public function add(Request $request)
@@ -30,15 +40,17 @@ class PerfilController extends Controller
     $validated = Validator::make($request->all(), [
       'nombre' => 'required|min:3'
     ]);
-    return $this->tryCatch(function () use ($validated) {
+    $empresa = Empresa::find($this->empresa());
+
+    return $this->tryCatch(function () use ($validated, $empresa) {
       if ($validated->fails()) {
         throw new Exception($validated->errors());
       }
-
       $inputs = $validated->validated();
-      $perfil = Perfil::create([
+      $perfil = new Perfil([
         "nombre" => $inputs['nombre']
       ]);
+      $empresa->perfiles()->save($perfil);
       return $this->responseOk($perfil, "El perfil {$inputs['nombre']}, ha sido registrado con exito!");
     });
   }
@@ -58,6 +70,9 @@ class PerfilController extends Controller
       if (!$perfil) {
         throw new Exception("El perfil no existe");
       }
+      if (strcmp($perfil->empresa_id, $this->empresa()) != 0) {
+        throw new Exception('No tienes acceso al poder al perfil');
+      }
       $perfil->update([
         'nombre'  => $inputs['nombre']
       ]);
@@ -73,6 +88,9 @@ class PerfilController extends Controller
       if (!$perfil) {
         throw new Exception("El perfil no existe");
       }
+      if (strcmp($perfil->empresa_id, $this->empresa()) != 0) {
+        throw new Exception('No tienes acceso al poder al perfil');
+      }
       $perfil->delete();
       return $this->responseOk($perfil, "El perfil {$perfil->nombre}, ha sido eliminado con exito!");
     });
@@ -84,6 +102,9 @@ class PerfilController extends Controller
       $perfil = Perfil::find($id);
       if (!$perfil) {
         throw new Exception('El perfil no existe');
+      }
+      if (strcmp($perfil->empresa_id, $this->empresa()) != 0) {
+        throw new Exception('No tienes acceso al poder al perfil');
       }
       $perfil->update([
         'estado' => $perfil->estado === 'A' ? 'I' : 'A'

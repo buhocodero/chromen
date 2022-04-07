@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Empresa;
 use App\Models\Perfil;
 use Illuminate\Database\Seeder;
 
@@ -17,8 +18,16 @@ class PerfilSeeder extends Seeder
     $perfiles = [
       'Adminitrador', 'Usuario', 'Vendedor', 'Contador'
     ];
+
+    $empresa = Empresa::create([
+      'nombre' => 'Empesa S.A de C.V'
+    ]);
+
     foreach ($perfiles as $value) {
-      Perfil::create(["nombre" => $value]);
+      $perfil = new Perfil([
+        "nombre"  => $value,
+      ]);
+      $empresa->perfiles()->save($perfil);
     }
   }
 }

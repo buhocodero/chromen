@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
       PerfilSeeder::class,
       ModuloSeeder::class,
       PerfilsModulosSeeder::class,
-      UsersSeeder::class,
+      DataSeeder::class,
     ]);
   }
 }

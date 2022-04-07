@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
    * @var array<int, string>
    */
   protected $fillable = [
-    'nombres', 'apellidos', 'usuario', 'avatar', 'password'
+    'usuario', 'avatar', 'password'
   ];
 
   /**
@@ -44,6 +44,11 @@ class User extends Authenticatable implements JWTSubject
     return $this->belongsTo(Perfil::class);
   }
 
+  public function persona()
+  {
+    return $this->belongsToMany(Persona::class, 'persona_users', 'user_id', 'persona_id');
+  }
+
   public function getJWTIdentifier()
   {
     return $this->getKey();
@@ -55,6 +60,8 @@ class User extends Authenticatable implements JWTSubject
    */
   public function getJWTCustomClaims()
   {
-    return [];
+    return [
+      'empresa' => $this->perfil->empresa_id
+    ];
   }
 }

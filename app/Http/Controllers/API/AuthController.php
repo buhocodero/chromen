@@ -43,7 +43,9 @@ class AuthController extends Controller
 
   public function me()
   {
-    return $this->responseOk(self::userAndRoles());
+    return $this->responseOk(
+      $this->userAndRoles(),
+    );
   }
 
   // funciones utiles para la creacion de tokens
@@ -58,12 +60,25 @@ class AuthController extends Controller
   private function userAndRoles()
   {
     $user = auth()->user();
-    $usuario = User::where('id', $user->id)->select('nombres', 'apellidos', 'usuario', 'avatar')->first();
+    $persona = User::find($user->id)->with('persona')->first();
     $perfil = Perfil::where('id', $user->perfil_id)->with('modulos')->get();
+
+    $data = self::getDataUser($persona);
 
     return [
       "perfil"  => $perfil,
-      "usuario" => $usuario,
+      "data"   => $data,
+    ];
+  }
+
+  private function getDataUser($user)
+  {
+    $persona = $user->persona[0];
+    return [
+      'nombres'     => $persona->nombres,
+      'apellidos'   => $persona->apellidos,
+      'usuario'     => $user->usuario,
+      'avatar'      => $user->avatar
     ];
   }
 }

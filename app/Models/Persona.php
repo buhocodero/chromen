@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Persona extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $fillable = ['nombres', 'apellidos'];
+
+  public function user()
+  {
+    return $this->belongsToMany(User::class, 'persona_users', 'user_id', 'persona_id');
+  }
 }

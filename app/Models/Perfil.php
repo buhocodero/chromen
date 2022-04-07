@@ -9,13 +9,18 @@ class Perfil extends Model
 {
   use HasFactory;
   public $timestamps = false;
-  protected $fillable = ['nombre', 'estado'];
+  protected $fillable = ['nombre', 'estado', 'empresa_id'];
 
   protected $hidden = ['pivot'];
 
   public function users()
   {
     return $this->hasMany(User::class);
+  }
+
+  public function empresa()
+  {
+    return $this->belongsTo(Empresa::class);
   }
 
   public function modulos()

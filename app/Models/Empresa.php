@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Empresa extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $fillable = ['nombre'];
+
+  public function perfiles()
+  {
+    return $this->hasMany(Perfil::class);
+  }
 }
