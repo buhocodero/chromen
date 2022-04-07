@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Rules\ValidName;
+use App\Rules\ValidarTelefono;
+use App\Rules\ValidarDUI;
 
 use App\Models\Cliente;
 
@@ -41,15 +43,15 @@ class ClienteController extends Controller
     public function store(Request $request)
     {   
         $validatedData = $request->validate([
-            "nombres" => ["required","string",new  validName],
-            "apellidos" => "required|string",
-            "email" => "required|string|unique:clientes,email",            
-            "telefono" => "required|string",
+            "nombres" => ["required","string",new  ValidName],
+            "apellidos" => ["required","string",new  ValidName],
+            "email" => "required|email|unique:clientes,email",            
+            "telefono" => ["required","string",new  ValidarTelefono],
             "documento" => "required|string",
             "tipo_documento" => "required|string",
             "fecha_nacimiento" => "required|string",
             "direccion" => "required|string",            
-            "NIT" => "required"           ,
+            "NIT" => ["required",new ValidarNIT],
         ]);        
         return Cliente::create($validatedData);
     }
