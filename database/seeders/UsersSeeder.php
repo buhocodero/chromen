@@ -22,9 +22,9 @@ class UsersSeeder extends Seeder
 
     for ($i = 0; $i < $max; $i++) {
       User::create([
-        'nombres'         => $i === 0 ? 'melara0606' :  $faker->name(),
+        'usuario'         => $i === 0 ? 'melara0606' :  $faker->userName(),
         'apellidos'       => $faker->lastName(),
-        "usuario"         => $faker->userName(),
+        "nombres"         => $faker->name(),
         'avatar'          => $faker->imageUrl(),
         'password'        => $password,
         'remember_token'  => Str::random(10),

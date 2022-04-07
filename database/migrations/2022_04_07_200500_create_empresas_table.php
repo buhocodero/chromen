@@ -4,19 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriasTable extends Migration
+class CreateEmpresasTable extends Migration
 {
   /**
    * Run the migrations.
    *
    * @return void
    */
-  // TODO: Agregar la columna para la empresa
   public function up()
   {
-    Schema::create('categorias', function (Blueprint $table) {
+    Schema::create('empresas', function (Blueprint $table) {
       $table->id();
-      $table->string('nombre');
+      $table->string('nombre', 50);
       $table->timestamps();
     });
   }
@@ -28,6 +27,6 @@ class CreateCategoriasTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('categorias');
+    Schema::dropIfExists('empresas');
   }
 }

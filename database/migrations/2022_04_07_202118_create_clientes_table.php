@@ -14,15 +14,13 @@ class CreateClientesTable extends Migration
   public function up()
   {
     Schema::create('clientes', function (Blueprint $table) {
-      $table->id();      
-      $table->string('nombres', 50);
-      $table->string('apellidos', 50);
-      $table->string('email')->unique();
-      $table->string('telefono', 10)->nullable();            
-      $table->string('celular', 10);            
-      $table->mediumText('direccion');
-      $table->unsignedInteger('compras')->default(0);      
+      $table->id();
+      $table->unsignedBigInteger('persona_id');
       $table->timestamps();
+
+      $table->foreign('persona_id')
+        ->references('id')
+        ->on('personas');
     });
   }
 
