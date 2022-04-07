@@ -18,10 +18,8 @@ class ClienteFactory extends Factory
       'apellidos' => $this->faker->lastName(),
       'email' => $this->faker->email(),
       'telefono' => $this->faker->numerify('7#######'),
-      'documento' => $this->faker->numerify('0#######-#'),
-      'fecha_nacimiento' => $this->faker->date(),
-      'direccion' => $this->faker->address(),
-      'NIT' => $this->faker->numerify('####-######-###-#')     
+      'celular' => $this->faker->numerify('7#######'),      
+      'direccion' => $this->faker->address()      
     ];
   }
 }

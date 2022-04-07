@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidarTelefono implements Rule
+class ValidarCelular implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,11 +25,7 @@ class ValidarTelefono implements Rule
      */
     public function passes($attribute, $value)
     {
-        if($value===null || $value===""){
-            return true;
-        }else{
-            return preg_match('/(2|6|7){1}[0-9]{3}-([0-9]{4})$/', $value);
-        }        
+        return preg_match('/(6|7){1}[0-9]{3}-([0-9]{4})$/', $value);
     }
 
     /**
@@ -39,6 +35,6 @@ class ValidarTelefono implements Rule
      */
     public function message()
     {
-        return 'El formato telefonico no es válido';
+        return 'El formato del celular no es válido';
     }
 }
