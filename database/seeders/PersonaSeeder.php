@@ -1,10 +1,11 @@
 <?php
+
 namespace Database\Seeders;
 
-use App\Models\TipoDocumento;
+use App\Models\Persona;
 use Illuminate\Database\Seeder;
 
-class TipoDocumentoSeeder extends Seeder
+class PersonaSeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -13,7 +14,9 @@ class TipoDocumentoSeeder extends Seeder
    */
   public function run()
   {
-    TipoDocumento::factory(2)->create();
+    Persona::create([
+      "nombres"     => "Edwin",
+      "apellidos"   => "Melara",
+    ]);
   }
 }
-

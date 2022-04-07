@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStocksTable extends Migration
+class CreateSucursalEmpleadosTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,24 +13,24 @@ class CreateStocksTable extends Migration
    */
   public function up()
   {
-    Schema::create('stocks', function (Blueprint $table) {
+    Schema::create('sucursal_empleados', function (Blueprint $table) {
       $table->id();
+      $table->unsignedBigInteger('empleado_id');
       $table->unsignedBigInteger('sucursal_id');
-      $table->unsignedBigInteger('producto_id');
       $table->timestamps();
 
+      $table->foreign('empleado_id')->references('id')->on('empleados');
       $table->foreign('sucursal_id')->references('id')->on('sucursals');
-      $table->foreign('producto_id')->references('id')->on('productos');
     });
   }
 
-  /**
+  /**unsignedBun
    * Reverse the migrations.
    *
    * @return void
    */
   public function down()
   {
-    Schema::dropIfExists('stocks');
+    Schema::dropIfExists('sucursal_empleados');
   }
 }

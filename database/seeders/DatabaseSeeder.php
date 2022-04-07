@@ -18,10 +18,6 @@ class DatabaseSeeder extends Seeder
       ModuloSeeder::class,
       PerfilsModulosSeeder::class,
       UsersSeeder::class,
-      CategoriaSeeder::class,
-      ProductoSeeder::class,
-      ClienteSeeder::class,
-      TipoDocumentoSeeder::class,
     ]);
   }
 }
