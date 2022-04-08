@@ -14,10 +14,9 @@ class CreateClientesTable extends Migration
   public function up()
   {
     Schema::create('clientes', function (Blueprint $table) {
-      $table->id();
+      $table->id();      
       $table->unsignedBigInteger('persona_id');
       $table->timestamps();
-
       $table->foreign('persona_id')
         ->references('id')
         ->on('personas');

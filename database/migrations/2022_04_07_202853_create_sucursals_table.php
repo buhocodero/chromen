@@ -16,8 +16,10 @@ class CreateSucursalsTable extends Migration
     Schema::create('sucursals', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
+      $table->string('nombre', 50);
+      $table->string('ubicacion', 150);
+      $table->enum('casa_matriz',["SI","NO"]);
       $table->timestamps();
-
       $table->foreign('empresa_id')
         ->references('id')
         ->on('empresas');
