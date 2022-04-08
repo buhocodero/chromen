@@ -11,6 +11,7 @@ use App\Rules\ValidarTelefono;
 use App\Rules\ValidarCelular;
 
 use App\Models\Cliente;
+use App\Models\Persona;
 
 class ClienteController extends Controller
 {
@@ -34,13 +35,20 @@ class ClienteController extends Controller
         $validatedData = $request->validate([
             "nombres" => ["required","string",new  ValidName],
             "apellidos" => ["required","string",new  ValidName],
-            "email" => "required|email|unique:clientes,email",            
+            "email" => "required|email|unique:personas,email",            
             "telefono" => ["string",new  ValidarTelefono],
             "celular" => ["required","string",new  ValidarCelular],            
             "direccion" => "required|string",
             
-        ]);        
-        return Cliente::create($validatedData);
+        ]);  
+        $persona=Persona::create($request->all());                    
+        if($persona!=="" && $persona!==null && $persona!=[]){
+            $cliente = new Cliente([
+                "persona_id" => $persona->id
+              ]);
+            return $persona->clientes()->save($cliente);
+            
+        }
     }
 
     /**
@@ -60,9 +68,10 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        return Cliente::find($request["id"]);
+        $cliente=Cliente::find($id);
+        return Persona::find($cliente->persona_id);
     }
 
     /**
@@ -71,10 +80,9 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id,Request $request)
     {       
-        $validatedData = $request->validate([
-            "id"=>"required|string",
+        $validatedData = $request->validate([            
             "nombres" => ["required","string",new  ValidName],
             "apellidos" => ["required","string",new  ValidName],
             "email" => "required|email",            
@@ -82,9 +90,10 @@ class ClienteController extends Controller
             "celular" => ["required","string",new  ValidarCelular],            
             "direccion" => "required|string",
             
-        ]);            
-        $cliente= Cliente::find($request["id"]);
-        $cliente->update($request->all());
+        ]);  
+        $cliente=Cliente::find($id);
+        $persona=Persona::find($cliente->persona_id);        
+        $persona->update($request->all());
         return $cliente;
     }
 
@@ -106,8 +115,8 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        return Cliente::destroy($request["id"]);
+        return Cliente::destroy($id);
     }
 }

@@ -20,8 +20,19 @@ use App\Http\Controllers\API\ClienteController;
 */
 
 Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/clientes', [ClienteController::class, 'edit']);
-Route::get('/clientes', [ClienteController::class, 'index']);
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'auth',
+], function () {
+  Route::controller(ClienteController::class)->group(function () {
+    Route::post('/clientes',  'create');
+    Route::get('/clientes/{id}',  'show');
+    Route::put('/clientes/{id}',  'edit');
+    Route::delete('/clientes/{id}', 'destroy');    
+  });
+});
+
 Route::group([
   'middleware'  => 'jwt.verify',
   'prefix'      => 'auth',
