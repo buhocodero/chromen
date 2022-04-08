@@ -20,7 +20,8 @@ class PerfilSeeder extends Seeder
     ];
 
     $empresa = Empresa::create([
-      'nombre' => 'Empesa S.A de C.V'
+      'nombre' => 'Empesa S.A de C.V',
+      'ubicacion' => 'Ubicacion'
     ]);
 
     foreach ($perfiles as $value) {

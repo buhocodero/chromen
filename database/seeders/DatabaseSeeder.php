@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
 class DatabaseSeeder extends Seeder
 {
   /**
@@ -14,10 +13,13 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     $this->call([
-      PerfilSeeder::class,
+      PersonaSeeder::class,
+      EmpresaSeeder::class,
       ModuloSeeder::class,
+      PerfilSeeder::class,      
       PerfilsModulosSeeder::class,
-      DataSeeder::class,
+      //DataSeeder::class,
+
     ]);
   }
 }
