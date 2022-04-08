@@ -21,9 +21,15 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return Cliente::all();
+    {        
+        return Persona::all();
     }
+    //este metodo devuelve el cliente a partir del idPersona
+    public function idClienteFromPerson($id)    {        
+        $cliente=Cliente::where("persona_id","=",$id)->get();        
+        return $cliente;
+    }
+    
 
     /**
      * Show the form for creating a new resource.

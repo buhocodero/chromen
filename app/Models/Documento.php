@@ -9,10 +9,15 @@ class Documento extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nombre','descripcion'        
+        'id_tipo_documento',"numero",'foto','id_persona'        
       ];
+    
     public function personas()
     {
         return $this->belongsTo(Persona::class);
-    }    
+    }  
+    public function tipo_documentos()
+    {
+        return $this->belongsTo(TipoDocumento::class);
+    }      
 }

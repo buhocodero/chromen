@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\TipoDocumento;
+use App\Models\Documento;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
-class TipoDocumentoController extends Controller
+class DocumentoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class TipoDocumentoController extends Controller
      */
     public function index()
     {
-        return TipoDocumento::all();
+        //
     }
 
     /**
@@ -25,9 +24,8 @@ class TipoDocumentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {
-        //return $request->all();
-        return TipoDocumento::create($request->all());
+    {        
+        return Documento::create($request->all());
     }
 
     /**
@@ -44,36 +42,33 @@ class TipoDocumentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TipoDocumento  $tipoDocumento
+     * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Documento $documento)
     {
-        $tipoDocumento=TipoDocumento::find($id);        
-        return $tipoDocumento;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TipoDocumento  $tipoDocumento
+     * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit(Documento $documento)
     {
-        $tipoDocumento=TipoDocumento::find($id);
-        $tipoDocumento->update($request->all());
-        return $tipoDocumento;
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TipoDocumento  $tipoDocumento
+     * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoDocumento $tipoDocumento)
+    public function update(Request $request, Documento $documento)
     {
         //
     }
@@ -81,11 +76,11 @@ class TipoDocumentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TipoDocumento  $tipoDocumento
+     * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Documento $documento)
     {
-        return TipoDocumento::destroy($id);
+        //
     }
 }

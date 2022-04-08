@@ -21,7 +21,7 @@ class CreatePersonasTable extends Migration
       $table->string("telefono",10)->nullable();      
       $table->string("celular",10);            
       $table->string("direccion");            
-      $table->date("fecha_nacimiento");            
+      $table->date("fecha_nacimiento")->nullable();            
       $table->enum('tipoPersona',["empleado","cliente"]);      
       $table->timestamps();
     });
