@@ -12,6 +12,8 @@ use App\Rules\ValidarCelular;
 
 use App\Models\Cliente;
 use App\Models\Persona;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class ClienteController extends Controller
 {
@@ -123,6 +125,11 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        return Cliente::destroy($id);
+        if($this->show($id)!==null && $this->show($id)!==[]){
+            return Cliente::destroy($id);
+        }else{
+            return "El registro con id $id no existe";
+        }
+        
     }
 }

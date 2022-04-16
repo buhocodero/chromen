@@ -86,6 +86,10 @@ class TipoDocumentoController extends Controller
      */
     public function destroy($id)
     {
-        return TipoDocumento::destroy($id);
+        if($this->show($id)!==null && $this->show($id)!==[]){
+            return TipoDocumento::destroy($id);
+        }else{
+            return "El registro con id $id no existe";
+        }        
     }
 }

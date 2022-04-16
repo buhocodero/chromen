@@ -9,7 +9,7 @@ class Documento extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_tipo_documento',"numero",'foto','id_persona'        
+        'id_tipo_documento',"numero",'foto','numeroDocumento','id_persona'        
       ];
     
     public function personas()

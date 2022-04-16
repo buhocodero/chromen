@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
    * @var array<int, string>
    */
   protected $fillable = [
-    'usuario', 'avatar', 'password'
+    'usuario', 'avatar', 'password','ultimo_login','remember_token','perfil_id'
   ];
 
   /**
@@ -64,4 +64,5 @@ class User extends Authenticatable implements JWTSubject
       'empresa' => $this->perfil->empresa_id
     ];
   }
+  
 }

@@ -21,23 +21,25 @@ use App\Http\Controllers\API\DocumentoController;
 */
 
 Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+
 
 Route::group([
   'middleware'  => 'jwt.verify',
-  'prefix'      => 'auth',
+  'prefix'      => 'doc',
 ], function () {
   Route::controller(DocumentoController::class)->group(function () {
     Route::post('/documento',  'create');
-    //Route::get('/documento/{id}',  'show');
-    //Route::put('/documento/{id}',  'edit');
-    //Route::delete('/documento/{id}', 'destroy');    
-    //Route::get('/documento','index');    
+    Route::get('/documento/{id}',  'show');
+    Route::put('/documento/{id}',  'edit');
+    Route::delete('/documento/{id}', 'destroy');    
+    Route::get('/documentos','index');    
   });
 });
-
+//eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1MDA0Njg2MCwiZXhwIjoxNjUwMDUwNDYwLCJuYmYiOjE2NTAwNDY4NjAsImp0aSI6Im5jMFNHVjEya2k0YTF5bXQiLCJzdWIiOjIxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwiZW1wcmVzYSI6NzE2fQ.vFZeBR_OzOjgqVKOcRH6HyQZAFHgNw1MAA5BH-qUeBk
 Route::group([
   'middleware'  => 'jwt.verify',
-  'prefix'      => 'auth',
+  'prefix'      => '/tDoc',
 ], function () {
   Route::controller(TipoDocumentoController::class)->group(function () {
     Route::post('/tipodocumento',  'create');
@@ -48,9 +50,10 @@ Route::group([
   });
 });
 
+
 Route::group([
   'middleware'  => 'jwt.verify',
-  'prefix'      => 'auth',
+  'prefix'      => 'clientes',
 ], function () {
   Route::controller(ClienteController::class)->group(function () {
     Route::post('/clientes',  'create');

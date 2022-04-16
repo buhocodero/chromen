@@ -15,7 +15,8 @@ class DocumentoController extends Controller
      */
     public function index()
     {
-        //
+        $documentos=Documento::all();
+        return $documentos;
     }
 
     /**
@@ -45,9 +46,10 @@ class DocumentoController extends Controller
      * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function show(Documento $documento)
+    public function show($id)
     {
-        //
+        $documento=Documento::find($id);
+        return $documento;
     }
 
     /**
@@ -56,9 +58,12 @@ class DocumentoController extends Controller
      * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Documento $documento)
+    public function edit($id,Request $request)
     {
-        //
+        $documento=Documento::find($id);
+        $documento->update($request->all());
+        return $documento;
+        
     }
 
     /**
@@ -79,8 +84,13 @@ class DocumentoController extends Controller
      * @param  \App\Models\Documento  $documento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Documento $documento)
+    public function destroy( $id)
     {
-        //
+        if($this->show($id)!==null && $this->show($id)!==[]){
+            return Documento::destroy($id);
+        }else{
+            return "El registro con id $id no existe";
+        }
+        
     }
 }

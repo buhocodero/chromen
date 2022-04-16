@@ -18,7 +18,7 @@ class CreateDocumentosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_tipo_documento');
             $table->unsignedBigInteger('id_persona');
-            $table->string('numero',30);
+            $table->string('numeroDocumento',30);
             $table->string('foto')->nullable();
             
             $table->foreign('id_persona')

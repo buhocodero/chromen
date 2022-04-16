@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use JWTAuth;
+use Exception;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
@@ -17,15 +19,27 @@ class JwtMiddleware extends BaseMiddleware
    */
   public function handle($request, Closure $next)
   {
+    // try {
+    //   $this->authenticate($request);
+    // } catch (UnauthorizedHttpException $e) {
+    //   return response()
+    //     ->json([
+    //       'success' => false,
+    //       'message' => $e->getMessage()
+    //     ], 500);
+    // }
+    // return $next($request);
     try {
-      $this->authenticate($request);
-    } catch (UnauthorizedHttpException $e) {
-      return response()
-        ->json([
-          'success' => false,
-          'message' => $e->getMessage()
-        ], 500);
-    }
-    return $next($request);
+      $user = JWTAuth::parseToken()->authenticate();
+  } catch (Exception $e) {
+      if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
+          return response()->json(['status' => 'Token is Invalid']);
+      }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
+          return response()->json(['status' => 'Token is Expired']);
+      }else{
+          return response()->json(['status' => 'Authorization Token not found']);
+      }
+  }
+  return $next($request);
   }
 }
