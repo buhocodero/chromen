@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
-use App\Models\Cliente;
+use App\Models\Empleado;
 use App\Models\Persona;
 
 use App\Http\Controllers\Controller;
@@ -13,10 +13,7 @@ use App\Rules\ValidarTelefono;
 use App\Rules\ValidarCelular;
 
 
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-
-class ClienteController extends Controller
+class EmpleadoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,17 +21,16 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
-        //return Persona::all();
-        return Cliente::all();
+    {
+        return Empleado::all();
     }
-    //este metodo devuelve el cliente a partir del idPersona
+
+    //este metodo devuelve el empleado a partir del idPersona
     public function idClienteFromPerson($id)    {        
-        $cliente=Cliente::where("persona_id","=",$id)->get();        
-        return $cliente;
+        $empleado=Empleado::where("persona_id","=",$id)->get();        
+        return $empleado;
     }
     
-
     /**
      * Show the form for creating a new resource.
      *
@@ -53,10 +49,10 @@ class ClienteController extends Controller
         ]);  
         $persona=Persona::create($request->all());                    
         if($persona!=="" && $persona!==null && $persona!=[]){
-            $cliente = new Cliente([
+            $empleado = new Empleado([
                 "persona_id" => $persona->id
               ]);
-            return $persona->clientes()->save($cliente);           
+            return $persona->empleados()->save($empleado);           
         }
     }
 
@@ -67,26 +63,26 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $cliente=Cliente::find($id);
-        return Persona::find($cliente->persona_id);
+        $empleado=Empleado::find($id);
+        return Persona::find($empleado->persona_id);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
     public function edit($id,Request $request)
@@ -100,8 +96,8 @@ class ClienteController extends Controller
             "direccion" => "required|string",
             
         ]);  
-        $cliente=Cliente::find($id);
-        $persona=Persona::find($cliente->persona_id);        
+        $empleado=Empleado::find($id);
+        $persona=Persona::find($empleado->persona_id);        
         $persona->update($request->all());
         return $cliente;
     }
@@ -110,10 +106,10 @@ class ClienteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, Empleado $empleado)
     {
         //
     }
@@ -121,16 +117,15 @@ class ClienteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         if($this->show($id)!==null && $this->show($id)!==[]){
-            return Cliente::destroy($id);
+            return Empleado::destroy($id);
         }else{
             return "El registro con id $id no existe";
-        }
-        
+        }        
     }
 }

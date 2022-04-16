@@ -16,6 +16,10 @@ class Persona extends Model
   {
     return $this->hasMany(Cliente::class);
   }
+  public function empleados()
+  {
+    return $this->hasMany(Empleado::class);
+  }
   public function documentos()
   {
     return $this->hasMany(Documento::class);

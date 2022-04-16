@@ -8,6 +8,7 @@ use App\Http\Controllers\API\PerfilController;
 use App\Http\Controllers\API\ClienteController;
 use App\Http\Controllers\API\TipoDocumentoController;
 use App\Http\Controllers\API\DocumentoController;
+use App\Http\Controllers\API\EmpleadoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,19 @@ use App\Http\Controllers\API\DocumentoController;
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'empleado',
+], function () {
+  Route::controller(EmpleadoController::class)->group(function () {
+    Route::post('/empleados',  'create');
+    Route::get('/empleados/{id}',  'show');
+    Route::put('/empleados/{id}',  'edit');
+    Route::delete('/empleados/{id}', 'destroy');    
+    Route::get('/empleados','index');    
+  });
+});
 
 Route::group([
   'middleware'  => 'jwt.verify',
@@ -53,7 +67,7 @@ Route::group([
 
 Route::group([
   'middleware'  => 'jwt.verify',
-  'prefix'      => 'clientes',
+  'prefix'      => 'cliente',
 ], function () {
   Route::controller(ClienteController::class)->group(function () {
     Route::post('/clientes',  'create');
