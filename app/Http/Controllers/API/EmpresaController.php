@@ -126,7 +126,5 @@ class EmpresaController extends Controller
         $empresaCliente=EmpresaCliente::create($validatedData);
         return $empresaCliente;
     }
-    public function empresa_productos(Request $request){
-        //EmpresaProductos
-    }
+    
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\API\SucursalController;
 use App\Http\Controllers\API\MarcaController;
 use App\Http\Controllers\API\UnidadDeMedidaController;
 use App\Http\Controllers\API\ProductoController;
+use App\Http\Controllers\API\EmpresaProductosController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,6 +31,19 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 
 Route::group([
   'middleware'  => 'jwt.verify',
+  'prefix'      => 'empresas',
+], function () {
+  Route::controller(EmpresaProductosController::class)->group(function () {
+    Route::post('/productos',  'create');
+    Route::get('/productos/{id}',  'show');
+    Route::put('/productos/{id}',  'edit');
+    Route::delete('/productos/{id}', 'destroy');    
+    Route::get('/productos','index');        
+  });
+});
+
+Route::group([
+  'middleware'  => 'jwt.verify',
   'prefix'      => 'producto',
 ], function () {
   Route::controller(ProductoController::class)->group(function () {
@@ -43,8 +57,7 @@ Route::group([
     Route::get('/marcas/','productos_marca_read');    //
     Route::get('/marcas/{id}','productos_marca_readforId');    //
     Route::put('/marcas/{id}','productos_marca_update');    //
-    Route::delete('/marcas/{id}','productos_marca_delete');    //
-    
+    Route::delete('/marcas/{id}','productos_marca_delete');    //    
   });
 });
 
