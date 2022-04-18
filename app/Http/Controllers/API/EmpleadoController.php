@@ -12,7 +12,6 @@ use App\Rules\ValidName;
 use App\Rules\ValidarTelefono;
 use App\Rules\ValidarCelular;
 
-
 class EmpleadoController extends Controller
 {
     /**

@@ -9,7 +9,11 @@ use App\Http\Controllers\API\ClienteController;
 use App\Http\Controllers\API\TipoDocumentoController;
 use App\Http\Controllers\API\DocumentoController;
 use App\Http\Controllers\API\EmpleadoController;
-
+use App\Http\Controllers\API\EmpresaController;
+use App\Http\Controllers\API\SucursalController;
+use App\Http\Controllers\API\MarcaController;
+use App\Http\Controllers\API\UnidadDeMedidaController;
+use App\Http\Controllers\API\ProductoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +28,79 @@ use App\Http\Controllers\API\EmpleadoController;
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'producto',
+], function () {
+  Route::controller(ProductoController::class)->group(function () {
+    Route::post('/productos',  'create');
+    Route::get('/productos/{id}',  'show');
+    Route::put('/productos/{id}',  'edit');
+    Route::delete('/productos/{id}', 'destroy');    
+    Route::get('/productos','index');    
+    //crud productosmarcas
+    Route::post('/marcas','productos_marca');    //create    
+    Route::get('/marcas/','productos_marca_read');    //
+    Route::get('/marcas/{id}','productos_marca_readforId');    //
+    Route::put('/marcas/{id}','productos_marca_update');    //
+    Route::delete('/marcas/{id}','productos_marca_delete');    //
+    
+  });
+});
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'medidas',
+], function () {
+  Route::controller(UnidadDeMedidaController::class)->group(function () {
+    Route::post('/unidades',  'create');
+    Route::get('/unidades/{id}',  'show');
+    Route::put('/unidades/{id}',  'edit');
+    Route::delete('/unidades/{id}', 'destroy');    
+    Route::get('/unidades','index');    
+  });
+});
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'marca',
+], function () {
+  Route::controller(MarcaController::class)->group(function () {
+    Route::post('/marcas',  'create');
+    Route::get('/marcas/{id}',  'show');
+    Route::put('/marcas/{id}',  'edit');
+    Route::delete('/marcas/{id}', 'destroy');    
+    Route::get('/marcas','index');    
+  });
+});
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'sucursal',
+], function () {
+  Route::controller(SucursalController::class)->group(function () {
+    Route::post('/sucursales',  'create');
+    Route::get('/sucursales/{id}',  'show');
+    Route::put('/sucursales/{id}',  'edit');
+    Route::delete('/sucursales/{id}', 'destroy');    
+    Route::get('/sucursales','index');    
+  });
+});
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'empresa',
+], function () {
+  Route::controller(EmpresaController::class)->group(function () {
+    Route::post('/clientes',  'empresa_clientes');//se crea el cliente a una empresa x
+    Route::post('/productos',  'empresa_productos');//se crea productos a una empresa x    
+    Route::post('/empresas',  'create');
+    Route::get('/empresas/{id}',  'show');
+    Route::put('/empresas/{id}',  'edit');
+    Route::delete('/empresas/{id}', 'destroy');    
+    Route::get('/empresas','index');    
+  });
+});
 
 Route::group([
   'middleware'  => 'jwt.verify',
