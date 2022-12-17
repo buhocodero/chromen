@@ -17,12 +17,14 @@ class CreatePersonasTable extends Migration
       $table->id();
       $table->string('nombres', 50);      
       $table->string('apellidos', 50);
-      $table->string("email",100);      
+      $table->string("email",100)->unique();      
       $table->string("telefono",10)->nullable();      
-      $table->string("celular",10);            
+      $table->string("celular",10)->unique();            
       $table->string("direccion");            
+      $table->string("varios");            
       $table->date("fecha_nacimiento")->nullable();            
-      $table->enum('tipoPersona',["empleado","cliente"]);      
+      $table->enum('tipoPersona',["empleado","cliente","administradorEmpresa","AdministradorSistema"]);      
+      $table->enum('genero',["Masculino","Femenino"]);      
       $table->timestamps();
     });
   }

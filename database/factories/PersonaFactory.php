@@ -19,6 +19,8 @@ class PersonaFactory extends Factory
       'apellidos' => $this->faker->lastName(),
       'email' => $this->faker->unique()->safeEmail(),
       'telefono' => $this->faker->numerify('####-####'),
+      'varios' => $this->faker->numerify('####-####'),
+      'genero' => $this->faker->randomElement(["Masculino","Femenino"]),
       'celular' => $this->faker->numerify('####-####'),
       'direccion' => $this->faker->address(),
       'tipoPersona' => $this->faker->randomElement(["empleado","cliente"]),

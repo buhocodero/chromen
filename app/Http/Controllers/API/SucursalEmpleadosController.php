@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Sucursal;
-use App\Models\Empresa;
+use App\Models\SucursalEmpleados;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class SucursalController extends Controller
+class SucursalEmpleadosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +17,7 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        return Sucursal::all();   
+        return SucursalEmpleados::all();   
     }
 
     /**
@@ -29,66 +28,62 @@ class SucursalController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            "empresa_id" => ["required","string"],
-            "nombre" => ["required","string"],
-            "ubicacion" => ["required","string"],
-            "casa_matriz" => ["required","string"]            
+            "empleado_id" => ["required","string"],
+            "sucursal_id" => ["required","string"]            
         ]);  
-        $sucursal=Sucursal::create($validatedData);        
-        return $sucursal;
+        $obj=SucursalEmpleados::create($validatedData);        
+        return $obj;
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created resource in storage.
      *
-     * @param  \App\Models\Sucursal  $sucursal
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function sucursal(Request $request)
-    {       
-        $all = Empresa::where("id",$this->empresa())->with('sucursales')->get();
-        return $this->responseOk($all);        
+    public function store(Request $request)
+    {
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Sucursal  $sucursal
+     * @param  \App\Models\SucursalEmpleados  $sucursalEmpleados
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $sucursal=Sucursal::find($id);
-        return $sucursal;
+        $obj=SucursalEmpleados::find($id);
+        return $obj;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Sucursal  $sucursal
+     * @param  \App\Models\SucursalEmpleados  $sucursalEmpleados
      * @return \Illuminate\Http\Response
      */
     public function edit($id,Request $request)
     {
         $validatedData = $request->validate([
-            "empresa_id" => ["required","string"],
-            "nombre" => ["required","string"],
-            "ubicacion" => ["required","string"],
-            "casa_matriz" => ["required","string"]            
+            "empleado_id" => ["required","string"],
+            "sucursal_id" => ["required","string"]            
         ]);  
-        $sucursal=Sucursal::find($id);
-        $sucursal->update($request->all());
-        return $sucursal;
+        $obj=SucursalEmpleados::find($id);
+        $obj->update($request->all());
+        return $obj;
     }
+
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sucursal  $sucursal
+     * @param  \App\Models\SucursalEmpleados  $sucursalEmpleados
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sucursal $sucursal)
+    public function update(Request $request, SucursalEmpleados $sucursalEmpleados)
     {
         //
     }
@@ -96,13 +91,13 @@ class SucursalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Sucursal  $sucursal
+     * @param  \App\Models\SucursalEmpleados  $sucursalEmpleados
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         if($this->show($id)!==null && $this->show($id)!==[]){
-            return Sucursal::destroy($id);
+            return SucursalEmpleados::destroy($id);
         }else{
             return "El registro con id $id no existe";
         }        

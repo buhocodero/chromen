@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
       PerfilSeeder::class,      
       PerfilsModulosSeeder::class,
       UsersSeeder::class,
-
+      // TipoDocumentoSeeder::class
     ]);
   }
 }

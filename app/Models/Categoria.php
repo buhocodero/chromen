@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Empleado extends Model
+class Categoria extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'persona_id' //,'codigoPersona'        
+        'nombre','descripcion'
       ];
-    public function personas()
+    public function video_categorias()
     {
-        return $this->belongsTo(Persona::class);
-    }    
+        return $this->hasMany(Video_Categoria::class);
+    }
 }

@@ -38,11 +38,12 @@ class Controller extends BaseController
     }
   }
 
-  public function responseError($data = array(), int $status = 422)
+  public function responseError($data = array(), $message = 'Fallo El proceso solicitado!',int $status = 422)
   {
     return response()->json([
       'success'  => false,
-      'data'     => $data
+      'data'     => $data,
+      'message'         => $message
     ], $status);
   }
 

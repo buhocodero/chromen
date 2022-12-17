@@ -20,6 +20,12 @@ class PerfilController extends Controller
     $all = Empresa::find($empresa)->with('perfiles')->get();
     return $this->responseOk($all);
   }
+  public function perfilesPorEmpresa($id)
+  {
+    $empresa = $this->empresa();
+    $empresa = Empresa::where('id', $id)->with('perfiles')->get();
+    return $this->responseOk($empresa);
+  }
 
   public function perfil($id)
   {
@@ -35,13 +41,12 @@ class PerfilController extends Controller
     });
   }
 
-  public function add(Request $request)
+  public function addPerfil(Request $request)
   {
     $validated = Validator::make($request->all(), [
       'nombre' => 'required|min:3'
-    ]);
-    $empresa = Empresa::find($this->empresa());
-
+    ]);    
+    $empresa = Empresa::find($this->empresa());    
     return $this->tryCatch(function () use ($validated, $empresa) {
       if ($validated->fails()) {
         throw new Exception($validated->errors());
@@ -93,7 +98,20 @@ class PerfilController extends Controller
       }
       $perfil->delete();
       return $this->responseOk($perfil, "El perfil {$perfil->nombre}, ha sido eliminado con exito!");
-    });
+    },"Error!!! Imposible realizar la operación, Consulte con su proveedor de servicio!");
+    // try {
+    //     $perfil = Perfil::find($id);
+    //   if (!$perfil) {
+    //     return $this->responseError("El perfil no existe!");
+    //   }
+    //   if (strcmp($perfil->empresa_id, $this->empresa()) != 0) {
+    //     return $this->responseError("No tienes acceso al perfil!");        
+    //   }
+    //   $perfil->delete();
+    //   return $this->responseOk($perfil, "El perfil {$perfil->nombre}, ha sido eliminado con exito!");
+    //   } catch (\Throwable $th) {
+    //     return $this->responseError("Error!!! Imposible realizar la operación ");        
+    //   }
   }
 
   public function status($id)

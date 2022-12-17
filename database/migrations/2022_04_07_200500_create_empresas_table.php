@@ -17,6 +17,7 @@ class CreateEmpresasTable extends Migration
       $table->id();
       $table->string('nombre', 50);
       $table->string('ubicacion', 150);
+      $table->enum('verificacion',["verificado","no_verificado"]);      
       $table->timestamps();
     });
   }

@@ -15,6 +15,13 @@ use App\Http\Controllers\API\MarcaController;
 use App\Http\Controllers\API\UnidadDeMedidaController;
 use App\Http\Controllers\API\ProductoController;
 use App\Http\Controllers\API\EmpresaProductosController;
+use App\Http\Controllers\API\SucursalEmpleadosController;
+use App\Http\Controllers\API\PersonaController;
+//desde aqui empieza la parte de la web
+use App\Http\Controllers\API\VideoController;
+use App\Http\Controllers\API\CategoriaController;
+use App\Http\Controllers\API\VideoCategoriaController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,6 +35,45 @@ use App\Http\Controllers\API\EmpresaProductosController;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+
+
+Route::get('/videos',[VideoController::class,'index']);    
+Route::get('/videos/{id}',[VideoController::class,'show']);      
+Route::post('/videos',[VideoController::class,'create']);    
+Route::put('/videos/image/{id}',  [VideoController::class,'editImage']);
+Route::delete('/videos/{id}', [VideoController::class,'destroy']);    
+
+Route::get('/categorias',[CategoriaController::class,'index']);    
+Route::get('/categorias/{id}',[CategoriaController::class,'show']);    
+Route::post('/categorias',[CategoriaController::class,'create']);  
+Route::put('/categorias/{id}',  [CategoriaController::class,'edit']);
+Route::delete('/categorias/{id}', [CategoriaController::class,'destroy']);    
+
+Route::get('/vid_cat',[VideoCategoriaController::class,'index']);    
+Route::get('/vid_cat/{id}',[VideoCategoriaController::class,'show']);    
+Route::post('/vid_cat',[VideoCategoriaController::class,'create']);  
+Route::delete('/vid_cat/{id}', [VideoCategoriaController::class,'eliminar']);    
+
+Route::get('/videos_catregory', [VideoCategoriaController::class,'showforCategory']);    
+
+
+// Route::post('/registrarEmpresa',  [EmpresaController::class,'createWithPerson']);
+//Route::post('/personacreate',  [PersonaController::class,'create']);
+
+
+Route::group([
+  'middleware'  => 'jwt.verify',
+  'prefix'      => 'sucursal',
+], function () {
+  Route::controller(SucursalEmpleadosController::class)->group(function () {
+    Route::post('/empleados',  'create');
+    Route::get('/empleados/{id}',  'show');
+    Route::put('/empleados/{id}',  'edit');
+    Route::delete('/empleados/{id}', 'destroy');    
+    Route::get('/empleados','index');        
+  });
+});
+
 
 Route::group([
   'middleware'  => 'jwt.verify',
@@ -92,11 +138,12 @@ Route::group([
   'prefix'      => 'sucursal',
 ], function () {
   Route::controller(SucursalController::class)->group(function () {
-    Route::post('/sucursales',  'create');
-    Route::get('/sucursales/{id}',  'show');
-    Route::put('/sucursales/{id}',  'edit');
-    Route::delete('/sucursales/{id}', 'destroy');    
-    Route::get('/sucursales','index');    
+    Route::get('/empresas',  'sucursal');
+    Route::post('/',  'create');
+    Route::get('/{id}',  'show');        
+    Route::put('/{id}',  'edit');
+    Route::delete('/{id}', 'destroy');    
+    Route::get('/','index');    
   });
 });
 
@@ -176,6 +223,8 @@ Route::group([
   Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout');
     Route::post('/me', 'me');
+    //Route::post('/token', 'getTokenUser');
+    
   });
 });
 
@@ -187,7 +236,8 @@ Route::group([
     // Para los perfiles
     Route::get('/', 'all');
     Route::get('/{id}', 'perfil');
-    Route::post('/', 'add');
+    Route::get('/empresa/{id}', 'perfilesPorEmpresa');    
+    Route::post('/', 'addPerfil');
     Route::put('/{id}', 'update');
     Route::put('/{id}/status', 'status');
     Route::delete('/{id}', 'delete');

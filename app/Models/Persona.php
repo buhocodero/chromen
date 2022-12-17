@@ -10,7 +10,7 @@ class Persona extends Model
   use HasFactory;
   protected $fillable = [
     'nombres', 'apellidos', 'email', 'telefono',      
-    'celular','direccion', 'fecha_nacimiento'
+    'celular','direccion', 'fecha_nacimiento','tipoPersona'
   ];
   public function clientes()
   {
@@ -20,7 +20,7 @@ class Persona extends Model
   {
     return $this->hasMany(Empleado::class);
   }
-  public function documentos()
+  public function documentoss()
   {
     return $this->hasMany(Documento::class);
   }

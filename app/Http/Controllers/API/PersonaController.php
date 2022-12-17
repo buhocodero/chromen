@@ -30,9 +30,9 @@ class PersonaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $persona=Persona::create($request);        
     }
 
     /**

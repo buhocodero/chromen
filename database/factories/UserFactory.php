@@ -9,7 +9,7 @@ class UserFactory extends Factory
 {
   public function definition()
   {
-    $password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
+    $password = '$2y$10$eMQGhSzI71DxiISjwJFK0u3znV2CFlLytTg3V66sgwXLKy61oJZWm'; // password
     return [
       'nombres'   => $this->faker->name(),
       'apellidos' => $this->faker->lastName(),

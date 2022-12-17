@@ -16,7 +16,8 @@ class EmpresaFactory extends Factory
     return [
       'id' => rand(1, 1000),
       'nombre' => $this->faker->name(),      
-      'ubicacion' => $this->faker->address()      
+      'ubicacion' => $this->faker->address(),      
+      'verificacion' => "no_verificado" 
     ];
   }
 }

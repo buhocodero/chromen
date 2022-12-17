@@ -1,8 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\API;
+
+use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\Persona;
+use App\Models\SucursalEmpleados;
+use App\Models\Sucursal;
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,7 +26,17 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        return Empleado::all();
+        //$empleado=Sucursal::where("empresa_id","=",$this->empresa())->get();        
+        //$empleado=Sucursal::where("empresa_id","=",$this->empresa())->with('sucursal_empleados')->get();        
+        $empleado=Sucursal::where("empresa_id","=",$this->empresa())->with('sucursal_empleados')->get();        
+        return $empleado;
+        
+
+        // $empresa = $this->empresa();
+        // $all = Empresa::find($empresa)->with('perfiles')->get();
+        // sucursal_empleados
+        //return $empleado;
+        //return Empleado::all();
     }
 
     //este metodo devuelve el empleado a partir del idPersona
@@ -35,6 +50,21 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private function generateCod($name,$codigoPersona){        
+            // $token = strtok($name, " \t"); // Primer token
+            // $i=0;
+            // $codigo="";
+            // while($token!==false) {
+            //     // En los tokens subsecuentes no se include el string $cadena
+            //     $codigo.=strtoupper($token[0]);
+            //     $token = strtok(" \t");$i++;
+            // }
+            // if (strlen($codigo)>6) {
+            //     $codigo=strtoupper(substr($codigo,0,6));
+            // }
+            // $codigo.=$codigoPersona; 
+
+    }
     public function create(Request $request)
     {
         $validatedData = $request->validate([
@@ -43,16 +73,33 @@ class EmpleadoController extends Controller
             "email" => "required|email|unique:personas,email",            
             "telefono" => ["string",new  ValidarTelefono],
             "celular" => ["required","string",new  ValidarCelular],            
-            "direccion" => "required|string",
-            
-        ]);  
+            "direccion" => "required|string",            
+        ]);
+        
+        
         $persona=Persona::create($request->all());                    
-        if($persona!=="" && $persona!==null && $persona!=[]){
+        if($persona!=="" && $persona!==null && $persona!=[]){            
             $empleado = new Empleado([
-                "persona_id" => $persona->id
+                "persona_id" => $persona->id // ,
+                //"codigoPersona" =>$codigoPersona
               ]);
-            return $persona->empleados()->save($empleado);           
+            $empleado=$persona->empleados()->save($empleado);               
+            // $completo=$persona->nombres." ".$persona->apellidos        ;
+                       
+
+            $documento=Documento::create([
+                "id_persona" => $persona->id,
+                "id_tipo_documento" => 1,
+                "numeroDocumento" => $request->numeroDocumento
+                // "foto" => $codigo
+              ]);
+            $sucursal= SucursalEmpleados::create([
+                "empleado_id" => $empleado->id,
+                "sucursal_id" => $request->sucursal
+            ]);
+            return $persona;           
         }
+        
     }
 
     /**
