@@ -10,6 +10,7 @@ class UnidadDeMedida extends Model
     use HasFactory;
     protected $fillable = ['nombre','simbolo','detalle'];
     //uno a muchos
+    //add un comentario
     public function productos()
     {
         return $this->hasMany(Producto::class);

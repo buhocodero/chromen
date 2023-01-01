@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 class VideoCategoriaController extends Controller
 {
     /**
+     * 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
